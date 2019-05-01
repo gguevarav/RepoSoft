@@ -14,7 +14,7 @@ class RegistroProgramas extends Migration
     public function up()
     {
         Schema::create('programas', function(Blueprint $table){
-            $table->increments('idPrograma');
+            $table->increments('id');
             $table->string('NombrePrograma');
             $table->string('UsuarioPrograma');
             $table->string('ClavePrograma');

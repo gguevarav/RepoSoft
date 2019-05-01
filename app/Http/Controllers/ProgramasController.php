@@ -15,7 +15,7 @@ class ProgramasController extends Controller
     public function index()
     {
         //
-        $programa=Programas::orderBy('idPrograma','DESC')->paginate(3);
+        $programa=Programas::orderBy('id','DESC')->paginate(3);
         return view('Programas.index',compact('programa'));
     }
 
@@ -59,7 +59,7 @@ class ProgramasController extends Controller
     {
         //
         $programa=Programas::find($id);
-        return  view('programas.show',compact('programa'));
+        return  view('Programas.show',compact('programa'));
     }
 
     /**
@@ -71,8 +71,8 @@ class ProgramasController extends Controller
     public function edit($id)
     {
         //
-        $programas=programas::find($id);
-        return view('programas.edit',compact('programas'));
+        $programa=Programas::find($id);
+        return view('Programas.edit',compact('programa'));
     }
 
     /**
@@ -92,8 +92,8 @@ class ProgramasController extends Controller
                                   'VersionPrograma'=>'required',
                                   'LinkDescargaPrograma'=>'required']);
  
-        programas::find($id)->update($request->all());
-        return redirect()->route('programas.index')->with('success','Registro actualizado satisfactoriamente');
+        Programas::find($id)->update($request->all());
+        return redirect()->route('Programas.index')->with('success','Registro actualizado satisfactoriamente');
     }
 
     /**
@@ -106,6 +106,6 @@ class ProgramasController extends Controller
     {
         //
         Programas::find($id)->delete();
-        return redirect()->route('programas.index')->with('success','Registro eliminado satisfactoriamente');
+        return redirect()->route('Programas.index')->with('success','Registro eliminado satisfactoriamente');
     }
 }

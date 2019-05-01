@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Programas extends Model
 {
     //
-    protected $fillable = ['idPrograma',
+    protected $fillable = ['id',
     					   'NombrePrograma',
     					   'UsuarioPrograma',
     					   'ClavePrograma',
