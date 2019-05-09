@@ -1,10 +1,8 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 Use App\Programas;
-
+use Illuminate\Http\Exceptions\PostTooLargeException;
 class ProgramasController extends Controller
 {
     /**
@@ -18,7 +16,6 @@ class ProgramasController extends Controller
         $programa=Programas::orderBy('id','DESC')->paginate(3);
         return view('Programas.index',compact('programa'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -29,7 +26,6 @@ class ProgramasController extends Controller
         //
         return view('Programas.create');
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -38,17 +34,27 @@ class ProgramasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Obtenemos el nombre del archivo
         $this->validate($request,['NombrePrograma'=>'required',
                                   'UsuarioPrograma'=>'required',
                                   'ClavePrograma'=>'required',
                                   'PlataformaPrograma'=>'required',
                                   'VersionPrograma'=>'required',
-                                  'LinkDescargaPrograma'=>'required']);
+                                  'ArchivoSubir'=>'required']);
+
+        // Obtenemos el nombre original del archivo
+        $NombreArchivo = $request->file('ArchivoSubir')->getClientOriginalName();
+        // Recibimos el archivo
+        //Storage::disk('local')->put('ArchivoSubir', 'public');
+        $request->file('ArchivoSubir')->storeAs('public', $NombreArchivo);
+        // Seteamos el nombre del input
+        $request->merge(['LinkDescargaPrograma' => $NombreArchivo]);
+        //$request->input('LinkDescargaPrograma', $NombreArchivo);
+
         Programas::create($request->all());
+
         return redirect()->route('Programas.index')->with('success','Registro creado satisfactoriamente');
     }
-
     /**
      * Display the specified resource.
      *
@@ -61,7 +67,6 @@ class ProgramasController extends Controller
         $programa=Programas::find($id);
         return  view('Programas.show',compact('programa'));
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -74,7 +79,6 @@ class ProgramasController extends Controller
         $programa=Programas::find($id);
         return view('Programas.edit',compact('programa'));
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -89,13 +93,11 @@ class ProgramasController extends Controller
                                   'UsuarioPrograma'=>'required',
                                   'ClavePrograma'=>'required',
                                   'PlataformaPrograma'=>'required',
-                                  'VersionPrograma'=>'required',
-                                  'LinkDescargaPrograma'=>'required']);
+                                  'VersionPrograma'=>'required']);
  
-        Programas::find($id)->update($request->all());
+        programas::find($id)->update($request->all());
         return redirect()->route('Programas.index')->with('success','Registro actualizado satisfactoriamente');
     }
-
     /**
      * Remove the specified resource from storage.
      *
