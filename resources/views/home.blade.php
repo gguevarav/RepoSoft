@@ -9,12 +9,25 @@
 
                 <div class="panel-body">
                     @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
                     @endif
-
-                    You are logged in!
+                    <div class="nav">
+                        <ul class="nav nav-pills nav-fill">
+                            <li class="nav-item">
+                                <a href="{{ url('Programas') }}" class="nav-link">Listado de programas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('Programas.create') }}"  class="nav-link">Subir un Programa</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://localhost/"  class="nav-link">Acerca de...</a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                    <!-- You are logged in! -->
                 </div>
             </div>
         </div>
